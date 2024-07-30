@@ -8,6 +8,7 @@ import image2 from './assets/Carousel/image2.webp';
 import image3 from './assets/Carousel/image3.webp';
 import image4 from './assets/Carousel/image4.webp';
 import './App.css';
+import Navbar from './components/Navbar/Navbar';
 
 interface VinylData {
   //id: string;
@@ -31,7 +32,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <h1>My Carousel</h1>
+      <Navbar />
       <Carousel images={images} />
       <div className="app-container">
 
@@ -39,7 +40,6 @@ const App: React.FC = () => {
       {selectedVinyl ? (
         <VinylDetails vinyl={selectedVinyl} onGoBack={handleGoBack} />
       ) : (
-        // <VinylList onVinylClick={handleVinylClick} />
         <VinylList onVinylClick={handleVinylClick}/>
       )}
       </div>
