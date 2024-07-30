@@ -1,0 +1,34 @@
+{
+    "vinyls": [
+        {
+            "title": "Abbey Road",
+            "artist": "The Beatles",
+            "price": 29.99,
+            "coverImage": "https://upload.wikimedia.org/wikipedia/en/4/42/Beatles_-_Abbey_Road.jpg"
+        },
+        {
+            "title": "The Dark Side of the Moon",
+            "artist": "Pink Floyd",
+            "price": 34.99,
+            "coverImage": "https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png"
+        },
+        {
+            "title": "Thriller",
+            "artist": "Michael Jackson",
+            "price": 24.99,
+            "coverImage": "https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png"
+        },
+        {
+            "title": "Hotel California",
+            "artist": "Eagles",
+            "price": 28.99,
+            "coverImage": "https://upload.wikimedia.org/wikipedia/en/4/49/Hotelcalifornia.jpg"
+        },
+        {
+            "title": "Rumours",
+            "artist": "Fleetwood Mac",
+            "price": 31.99,
+            "coverImage": "https://upload.wikimedia.org/wikipedia/en/f/fb/FMacRumours.PNG"
+        }
+    ]
+}
