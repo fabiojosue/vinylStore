@@ -3,6 +3,7 @@ const express = require('express');
 const properties = require('./config/properties');
 const db = require('./config/db');
 const vinylRoutes = require('./routes/vinyl');
+const artistRoutes = require('./routes/artist');
 db();
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/vinyls', vinylRoutes);
+app.use('/artist', artistRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

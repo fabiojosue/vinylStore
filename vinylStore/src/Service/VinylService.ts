@@ -3,10 +3,16 @@ import axios from 'axios';
 
 const baseUrl = 'http://localhost:3000/vinyls'; // Adjust the base URL as needed
 
+
+interface Artist {
+  _id: string;
+  name: string;
+}
+
 interface Vinyl {
-  id: string;
+  _id: string;
   title: string;
-  artist: string;
+  artist: Artist;
   coverImage: string;
   price: number;
 }

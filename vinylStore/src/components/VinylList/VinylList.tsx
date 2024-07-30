@@ -1,58 +1,18 @@
-// import React, { useEffect } from 'react';
-// import { v4 as uuidv4 } from 'uuid';
-// import vinylsData from '../../../vynils.json';
-// import Vinyl from '../Vinyl/Vinyl';
-// import './VinylList.css';
-// import '../../App.css'
-
-// interface VinylData {
-//   title: string;
-//   artist: string;
-//   price: number;
-//   coverImage: string;
-// }
-
-// interface VinylListProps {
-//   onVinylClick: (vinyl: VinylData) => void;
-// }
-
-// const VinylList: React.FC<VinylListProps> = ({ onVinylClick }) => {
-//   const [vinyls, setVinyls] = React.useState<VinylData[]>([]);
-//   useEffect(() => {
-//     setVinyls(vinylsData.vinyls);
-//   }, [vinyls]);
-
-
-//   return (
-//     <div className="vinyl-container">
-//       {vinyls.map((vinyl: VinylData) => (
-//         <Vinyl 
-//           key={uuidv4()}
-//           id={uuidv4()}
-//           title={vinyl.title}
-//           artist={vinyl.artist}
-//           price={vinyl.price}
-//           coverImage={vinyl.coverImage}
-//           onClick={() => onVinylClick(vinyl)}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default VinylList;
-
 import React, { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { getVinyls } from '../../Service/VinylService';
 import Vinyl from '../Vinyl/Vinyl';
 import './VinylList.css';
 import '../../App.css';
 
+interface Artist {
+  _id: string;
+  name: string;
+}
+
 interface VinylData {
-  id: string;
+  _id: string;
   title: string;
-  artist: string;
+  artist: Artist;
   price: number;
   coverImage: string;
 }
@@ -81,10 +41,10 @@ const VinylList: React.FC<VinylListProps> = ({ onVinylClick }) => {
     <div className="vinyl-container">
       {vinyls.map((vinyl) => (
         <Vinyl
-          key={vinyl.id}
-          id={vinyl.id}
+          key={vinyl._id}
+          id={vinyl._id}
           title={vinyl.title}
-          artist={vinyl.artist}
+          artist={vinyl.artist.name}
           price={vinyl.price}
           coverImage={vinyl.coverImage}
           onClick={() => onVinylClick(vinyl)}

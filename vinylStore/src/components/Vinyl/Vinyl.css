@@ -1,10 +1,15 @@
 .vinyl-card {
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 200px;
     text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+}
+.vinyl-card:hover{
+    transform: scale(1.03);
+    cursor: pointer;
 }
 
 .vinyl-card img {

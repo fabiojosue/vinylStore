@@ -1,46 +1,45 @@
 const express = require('express');
 const router = express.Router();
-const Vinyl = require('../models/vinyl');
+const Artist = require('../models/artist');
 
-// Create a new vinyl record
+// Create a new artist
 router.post('/', async (req, res) => {
     try {
-        const vinyl = new Vinyl(req.body);
-        await vinyl.save();
-        res.status(201).send(vinyl);
+        const artist = new Artist(req.body);
+        await artist.save();
+        res.status(201).send(artist);
     } catch (error) {
         res.status(400).send(error);
     }
 });
 
-// Get all vinyl records
+// Get all artists
 router.get('/', async (req, res) => {
     try {
-        const vinyls = await Vinyl.find().populate('artist');
-        console.log(vinyls);
-        res.status(200).send(vinyls);
+        const artists = await Artist.find();
+        res.status(200).send(artists);
     } catch (error) {
         res.status(500).send(error);
     }
 });
 
-// Get a vinyl record by ID
+// Get an artist by ID
 router.get('/:id', async (req, res) => {
     try {
-        const vinyl = await Vinyl.findById(req.params.id).populate('artist');
-        if (!vinyl) {
+        const artist = await Artist.findById(req.params.id);
+        if (!artist) {
             return res.status(404).send();
         }
-        res.status(200).send(vinyl);
+        res.status(200).send(artist);
     } catch (error) {
         res.status(500).send(error);
     }
 });
 
-// Update a vinyl record by ID
+// Update an artist by ID
 router.patch('/:id', async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ['title', 'artist', 'coverImage', 'price'];
+    const allowedUpdates = ['name'];
     const isValidOperation = updates.every(update => allowedUpdates.includes(update));
 
     if (!isValidOperation) {
@@ -48,27 +47,27 @@ router.patch('/:id', async (req, res) => {
     }
 
     try {
-        const vinyl = await Vinyl.findById(req.params.id);
-        if (!vinyl) {
+        const artist = await Artist.findById(req.params.id);
+        if (!artist) {
             return res.status(404).send();
         }
 
-        updates.forEach(update => vinyl[update] = req.body[update]);
-        await vinyl.save();
-        res.status(200).send(vinyl);
+        updates.forEach(update => artist[update] = req.body[update]);
+        await artist.save();
+        res.status(200).send(artist);
     } catch (error) {
         res.status(400).send(error);
     }
 });
 
-// Delete a vinyl record by ID
+// Delete an artist by ID
 router.delete('/:id', async (req, res) => {
     try {
-        const vinyl = await Vinyl.findByIdAndDelete(req.params.id);
-        if (!vinyl) {
+        const artist = await Artist.findByIdAndDelete(req.params.id);
+        if (!artist) {
             return res.status(404).send();
         }
-        res.status(200).send(vinyl);
+        res.status(200).send(artist);
     } catch (error) {
         res.status(500).send(error);
     }
