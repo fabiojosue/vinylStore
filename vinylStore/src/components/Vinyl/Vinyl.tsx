@@ -1,5 +1,4 @@
 import React from 'react';
-//import './App.css';
 import './Vinyl.css';
 
 interface VinylProps {
@@ -11,8 +10,7 @@ interface VinylProps {
   onClick: () => void;
 }
 
-const Vinyl: React.FC<VinylProps> = (props) => {
-  const { id, title, artist, price, coverImage, onClick } = props;
+const Vinyl: React.FC<VinylProps> = ({ id, title, artist, price, coverImage, onClick }) => {
   return (
     <div className="vinyl-card" onClick={onClick}>
       <img src={coverImage} alt={`${title} cover`} />
