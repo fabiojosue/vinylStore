@@ -10,9 +10,9 @@ interface Artist {
 }
 
 interface Vinyl {
-  _id: string;
+  _id?: string;
   title: string;
-  artist: Artist;
+  artist: Artist | string;
   coverImage: string;
   price: number;
 }

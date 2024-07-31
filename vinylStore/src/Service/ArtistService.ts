@@ -3,7 +3,7 @@ import axios from 'axios';
 const baseUrl = 'http://localhost:3000/artist'; // Adjust the base URL as needed
 
 interface Artist {
-  id: string;
+  _id?: string;
   name: string;
 }
 

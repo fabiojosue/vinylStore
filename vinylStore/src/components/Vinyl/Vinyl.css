@@ -26,3 +26,16 @@
 .vinyl-card p {
     margin: 5px 0;
 }
+
+.vinyl-card button {
+    background-color: #212121;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+.vinyl-card button:hover {
+    background-color: #333;
+  }

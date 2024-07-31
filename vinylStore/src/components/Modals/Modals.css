@@ -1,4 +1,5 @@
-.modal-overlay {
+
+   .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -20,6 +21,15 @@
     max-width: 90%;
     position: relative;
     animation: slideIn 0.3s;
+    color: #212121;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .modal-content p{
+    font-size: 1rem;
+    color: red;
+    margin: 0;
   }
   
   .close-button {
@@ -35,18 +45,29 @@
   form {
     display: flex;
     flex-direction: column;
+    width: 100%; /* Ensure form takes full width of the modal content */
   }
   
-  form label {
-    margin-bottom: 10px;
-  }
-  
-  form input {
-    padding: 8px;
-    margin-top: 5px;
+  .input-container {
+    position: relative;
     margin-bottom: 15px;
-    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .input-container input,select {
+    width: 100%;
+    padding: 8px 8px 8px 30px; /* Add left padding to make space for the icon */
     border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+  }
+  
+  .input-container svg {
+    position: absolute;
+    top: 50%;
+    left: 10px; /* Adjust this value to position the icon correctly */
+    transform: translateY(-50%);
+    pointer-events: none; /* Make sure the icon doesn't interfere with input interaction */
   }
   
   button[type="submit"] {

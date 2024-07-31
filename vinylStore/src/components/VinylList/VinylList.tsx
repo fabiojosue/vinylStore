@@ -35,7 +35,7 @@ const VinylList: React.FC<VinylListProps> = ({ onVinylClick }) => {
     };
 
     fetchVinyls();
-  }, []);
+  }, [vinyls]);
 
   return (
     <div className="vinyl-container">
