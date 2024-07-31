@@ -1,7 +1,7 @@
 // src/services/vinylService.ts
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3000/vinyls'; // Adjust the base URL as needed
+const baseUrl = 'http://localhost:8080/vinyls'; // Adjust the base URL as needed
 
 
 interface Artist {

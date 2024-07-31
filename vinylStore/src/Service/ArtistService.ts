@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3000/artist'; // Adjust the base URL as needed
+const baseUrl = 'http://localhost:8080/artists'; // Adjust the base URL as needed
 
 interface Artist {
   _id?: string;
