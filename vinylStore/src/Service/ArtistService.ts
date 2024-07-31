@@ -35,3 +35,9 @@ export const updateArtist = async (id: string, updates: Partial<Artist>): Promis
 export const deleteArtist = async (id: string): Promise<void> => {
   await axios.delete(`${baseUrl}/${id}`);
 };
+
+//Validate if artist is being used in a record
+export const validateArtist = async (id: string): Promise<boolean> => {
+  const response = await axios.get(`${baseUrl}/used/${id}`);
+  return response.data;
+}

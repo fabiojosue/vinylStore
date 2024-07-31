@@ -21,6 +21,11 @@ public class ArtistController {
         return ResponseEntity.status(201).body(savedArtist);
     }
 
+    @GetMapping("/used/{id}")
+    public ResponseEntity<Boolean> isArtistUsed(@PathVariable String id){
+        return ResponseEntity.status(201).body(artistService.isArtistInVinyl(id));
+    }
+
     @GetMapping
     public ResponseEntity<List<Artist>> getAllArtists() {
         List<Artist> artists = artistService.getAllArtists();

@@ -45,3 +45,4 @@ export const updateVinyl = async (id: string, updates: Partial<Vinyl>): Promise<
 export const deleteVinyl = async (id: string): Promise<void> => {
   await axios.delete(`${baseUrl}/${id}`);
 };
+
