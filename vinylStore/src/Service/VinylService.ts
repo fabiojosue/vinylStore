@@ -1,21 +1,8 @@
 // src/services/vinylService.ts
 import axios from 'axios';
+import { Vinyl } from '../Interfaces/Interfaces';
 
 const baseUrl = 'http://localhost:8080/vinyls'; // Adjust the base URL as needed
-
-
-interface Artist {
-  _id: string;
-  name: string;
-}
-
-interface Vinyl {
-  _id?: string;
-  title: string;
-  artist: Artist | string;
-  coverImage: string;
-  price: number;
-}
 
 // Create a new vinyl record
 export const createVinyl = async (vinyl: Vinyl): Promise<Vinyl> => {

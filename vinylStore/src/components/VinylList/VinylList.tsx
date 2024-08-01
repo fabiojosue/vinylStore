@@ -1,53 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { getVinyls } from '../../Service/VinylService';
+import React from 'react';
 import Vinyl from '../Vinyl/Vinyl';
 import './VinylList.css';
 import '../../App.css';
-
-interface Artist {
-  _id: string;
-  name: string;
-}
-
-interface VinylData {
-  _id: string;
-  title: string;
-  artist: Artist;
-  price: number;
-  coverImage: string;
-}
+import { Vinyl as VinylType } from '../../Interfaces/Interfaces';
 
 interface VinylListProps {
-  onVinylClick: (vinyl: VinylData) => void;
+  vinyls: VinylType[];
 }
 
-const VinylList: React.FC<VinylListProps> = ({ onVinylClick }) => {
-  const [vinyls, setVinyls] = useState<VinylData[]>([]);
-
-  useEffect(() => {
-    const fetchVinyls = async () => {
-      try {
-        const vinylsData = await getVinyls();
-        setVinyls(vinylsData);
-      } catch (error) {
-        console.error('Error fetching vinyls:', error);
-      }
-    };
-
-    fetchVinyls();
-  }, [vinyls]);
-
+const VinylList: React.FC<VinylListProps> = ({ vinyls }) => {
   return (
     <div className="vinyl-container">
       {vinyls.map((vinyl) => (
         <Vinyl
           key={vinyl._id}
-          id={vinyl._id}
+          _id={vinyl._id}
           title={vinyl.title}
-          artist={vinyl.artist.name}
+          artist={vinyl.artistFetched.name}
           price={vinyl.price}
           coverImage={vinyl.coverImage}
-          onClick={() => onVinylClick(vinyl)}
         />
       ))}
     </div>
@@ -55,3 +26,5 @@ const VinylList: React.FC<VinylListProps> = ({ onVinylClick }) => {
 };
 
 export default VinylList;
+
+

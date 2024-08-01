@@ -1,35 +1,43 @@
 import React from 'react';
-import { deleteVinyl } from '../../Service/VinylService';
 import './Vinyl.css';
+import { deleteVinyl } from '../../Service/VinylService';
 
-interface VinylProps {
-  id: string;
-  title: string;
-  artist: string;
-  price: number;
-  coverImage: string;
-  onClick: () => void;
+interface Artist {
+  _id: string;
+  name: string;
 }
 
-const Vinyl: React.FC<VinylProps> = ({ id, title, artist, price, coverImage, onClick }) => {
+interface VinylProps {
+  _id: string;
+  title: string;
+  artist: Artist | string;
+  coverImage: string;
+  price: number;
+}
+
+const Vinyl: React.FC<VinylProps> = ({ _id, title, artist, coverImage, price }) => {
+  const artistName = typeof artist === 'string' ? artist : artist.name;
+
   const handleDelete = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      console.log('Deleting vinyl:', id);
-      await deleteVinyl(id);
-      console.log('Vinyl deleted successfully:', id);
+      console.log('Deleting vinyl:', _id);
+      await deleteVinyl(_id!);
+      console.log('Vinyl deleted successfully:', _id);
     } catch (error) {
       console.error('Error deleting vinyl:', error);
     }
   }
 
   return (
-    <div className="vinyl-card" onClick={onClick}>
+    <div className="vinyl-card">
       <img src={coverImage} alt={`${title} cover`} />
-      <h2>{title}</h2>
-      <p>{artist}</p>
-      <p>${price.toFixed(2)}</p>
-      <button onClick={handleDelete}>Delete</button>
+      <div className="vinyl-details">
+        <h3>{title}</h3>
+        <p>{artistName}</p>
+        <p>${price}</p>
+        <button onClick={handleDelete}>Delete</button>
+      </div>
     </div>
   );
 };

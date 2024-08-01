@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AddVinylModal from '../Modals/AddVinylModal';
 import AddArtistModal from '../Modals/AddArtistModal';
 import './Navbar.css';
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [isAddVinylModalOpen, setIsAddVinylModalOpen] = useState(false);
@@ -29,6 +30,9 @@ const Navbar: React.FC = () => {
       <div className="navbar-buttons">
         <button onClick={handleAddVinylClick}>Add Vinyl</button>
         <button onClick={handleAddArtistClick}>Add Artist</button>
+        <Link to="/login">
+          <button>Log In</button>
+        </Link>
       </div>
       {isAddVinylModalOpen && <AddVinylModal onClose={handleCloseVinylModal} />}
       {isAddArtistModalOpen && <AddArtistModal onClose={handleCloseArtistModal} />}

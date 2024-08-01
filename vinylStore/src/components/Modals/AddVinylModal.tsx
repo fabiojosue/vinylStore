@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { getArtists } from '../../Service/ArtistService';
 import { createVinyl } from '../../Service/VinylService';
 import './Modals.css';
+import { Vinyl } from '../../Interfaces/Interfaces';
 
 interface AddVinylModalProps {
   onClose: () => void;
+  onAddVinyl: (vinyl: Vinyl) => void;
 }
 
 interface Artist {
@@ -12,7 +14,7 @@ interface Artist {
   name: string;
 }
 
-const AddVinylModal: React.FC<AddVinylModalProps> = ({ onClose }) => {
+const AddVinylModal: React.FC<AddVinylModalProps> = ({ onClose, onAddVinyl }) => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
   const [price, setPrice] = useState('');
