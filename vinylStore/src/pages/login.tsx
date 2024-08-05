@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
 import '../Styles/login.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { loginUser } from '../Service/UserService';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Add this line to import and assign the useNavigate hook
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => { // Add 'async' keyword to the handleLogin function
     e.preventDefault();
-    // Handle login logic here
+    try {
+      const user = { username, password };
+      const token = await loginUser(user);
+      localStorage.setItem('token', token);
+      navigate('/dashboard');
+    } catch (error) {
+      alert('Invalid username or password');
+    }
   };
 
   return (
@@ -36,6 +46,7 @@ const Login: React.FC = () => {
             />
           </div>
           <button type="submit">Log In</button>
+          
         </form>
       </div>
     </div>
