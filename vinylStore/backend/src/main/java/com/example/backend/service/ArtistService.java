@@ -44,6 +44,8 @@ public class ArtistService {
         Artist artist = artistRepository.findById(id).orElse(null);
         if (artist != null) {
             artist.setName(artistDetails.getName());
+            artist.setBiography(artistDetails.getBiography());
+            artist.setImageURL(artistDetails.getImageURL());
             return artistRepository.save(artist);
         }
         return null;

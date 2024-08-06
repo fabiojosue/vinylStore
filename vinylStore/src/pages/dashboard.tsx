@@ -8,9 +8,12 @@ const Dashboard: React.FC = () => {
   return (
     <div className='container'>
       <DashboardSideNav />
+      <div className="backContainer">
       <Routes>
         <Route path="artist" element={<DashboardArtist />} />
       </Routes>
+      </div>
+      
     </div>
   );
 };

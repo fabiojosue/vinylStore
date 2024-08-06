@@ -1,11 +1,8 @@
 import axios from 'axios';
+import { Artist } from '../Interfaces/Interfaces';
 
 const baseUrl = 'http://localhost:8080/artists'; // Adjust the base URL as needed
 
-interface Artist {
-  _id?: string;
-  name: string;
-}
 
 // Create a new artist
 export const createArtist = async (artist: Artist): Promise<Artist> => {
