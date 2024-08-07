@@ -14,9 +14,9 @@ const VinylList: React.FC<VinylListProps> = ({ vinyls }) => {
       {vinyls.map((vinyl) => (
         <Vinyl
           key={vinyl._id}
-          _id={vinyl._id}
+          _id={vinyl._id!}
           title={vinyl.title}
-          artist={vinyl.artistFetched.name}
+          artist={vinyl.artistFetched!.name}
           price={vinyl.price}
           coverImage={vinyl.coverImage}
         />

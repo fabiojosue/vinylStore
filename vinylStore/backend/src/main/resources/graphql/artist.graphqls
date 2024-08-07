@@ -1,0 +1,24 @@
+type Artist{
+    _id: ID!
+    name: String!
+    biography: String
+    imageURL: String
+}
+
+extend type Query{
+    getAllArtists: [Artist]!
+    getArtistById(_id: ID!): Artist
+}
+
+extend type Mutation{
+    createArtist(artistInput: ArtistInput!): Artist!
+    updateArtist(id: ID!, artistInput: ArtistInput!): Artist!
+    deleteArtist(id: ID!): String
+    isArtistUsed(id: ID!): Boolean
+}
+
+input ArtistInput{
+    name: String!
+    biography: String
+    imageURL: String
+}

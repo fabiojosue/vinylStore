@@ -2,6 +2,7 @@ package com.example.backend.service;
 
 import com.example.backend.entity.Artist;
 import com.example.backend.entity.Vinyl;
+import com.example.backend.entity.dto.ArtistInput;
 import com.example.backend.repository.ArtistRepository;
 import com.example.backend.repository.VinylRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ public class ArtistService {
     @Autowired
     private VinylRepository vinylRepository;
 
-    public Artist saveArtist(Artist artist) {
+    public Artist saveArtist(ArtistInput artistInput) {
+        Artist artist = new Artist(artistInput.name(), artistInput.imageURL(), artistInput.biography());
         return artistRepository.save(artist);
     }
 
@@ -40,12 +42,12 @@ public class ArtistService {
         return false;
     }
 
-    public Artist updateArtist(String id, Artist artistDetails) {
+    public Artist updateArtist(String id, ArtistInput artistDetails) {
         Artist artist = artistRepository.findById(id).orElse(null);
         if (artist != null) {
-            artist.setName(artistDetails.getName());
-            artist.setBiography(artistDetails.getBiography());
-            artist.setImageURL(artistDetails.getImageURL());
+            artist.setName(artistDetails.name());
+            artist.setBiography(artistDetails.biography());
+            artist.setImageURL(artistDetails.imageURL());
             return artistRepository.save(artist);
         }
         return null;

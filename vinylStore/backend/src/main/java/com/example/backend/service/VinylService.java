@@ -2,6 +2,7 @@ package com.example.backend.service;
 
 import com.example.backend.entity.Artist;
 import com.example.backend.entity.Vinyl;
+import com.example.backend.entity.dto.VinylInput;
 import com.example.backend.repository.ArtistRepository;
 import com.example.backend.repository.VinylRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ public class VinylService {
     @Autowired
     private ArtistRepository artistRepository;
 
-    public Vinyl saveVinyl(Vinyl vinyl) {
+    public Vinyl saveVinyl(VinylInput vinylInput) {
+        Vinyl vinyl = new Vinyl(vinylInput.title(), vinylInput.artist(), vinylInput.coverImage(), vinylInput.price());
         return vinylRepository.save(vinyl);
     }
 
@@ -38,19 +40,20 @@ public class VinylService {
         return vinyl;
     }
 
-    public Vinyl updateVinyl(String id, Vinyl vinylDetails) {
+    public Vinyl updateVinyl(String id, VinylInput vinylInput) {
         Vinyl vinyl = vinylRepository.findById(id).orElse(null);
         if (vinyl != null) {
-            vinyl.setTitle(vinylDetails.getTitle());
-            vinyl.setArtist(vinylDetails.getArtist());
-            vinyl.setCoverImage(vinylDetails.getCoverImage());
-            vinyl.setPrice(vinylDetails.getPrice());
+            vinyl.setTitle(vinylInput.title());
+            vinyl.setArtist(vinylInput.artist());
+            vinyl.setCoverImage(vinylInput.coverImage());
+            vinyl.setPrice(vinylInput.price());
             return vinylRepository.save(vinyl);
         }
         return null;
     }
 
-    public void deleteVinyl(String id) {
+    public String deleteVinyl(String id) {
         vinylRepository.deleteById(id);
+        return "Deleted";
     }
 }

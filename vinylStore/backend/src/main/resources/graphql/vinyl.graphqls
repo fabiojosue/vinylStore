@@ -1,0 +1,26 @@
+type Vinyl{
+    _id: ID!
+    title: String!
+    coverImage: String
+    artistFetched: Artist!
+    artist: String
+    price: Float
+}
+
+input VinylInput{
+    title: String!
+    coverImage: String
+    artist: String
+    price: Float
+}
+
+extend type Query{
+    getAllVinyls: [Vinyl]!
+    getVinylById(id: ID!): Vinyl
+}
+
+extend type Mutation{
+    createVinyl(vinylInput: VinylInput): Vinyl!
+    updateVinyl(id: ID!, vinylInput: VinylInput): Vinyl!
+    deleteVinyl(id: ID!): String
+}

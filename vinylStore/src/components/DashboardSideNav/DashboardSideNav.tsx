@@ -1,6 +1,7 @@
 import React from 'react';
 import './DashboardSideNav.css';
 import icon from '../../assets/vinylicon.png'
+import { Link } from 'react-router-dom';
 
 const DashboardSideNav: React.FC = () => {
     const handleLogOut = () => {
@@ -14,19 +15,20 @@ const DashboardSideNav: React.FC = () => {
         <h2>Fabio</h2>
         <p className="subtitle">Administrator</p>
         <hr className="divider"></hr>
-        <button className="sdvButton">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill icon" viewBox="0 0 16 16">
-            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-        </svg>
-            Artists
-        </button>
-        <button className="sdvButton">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-vinyl-fill icon" viewBox="0 0 16 16">
-            <path d="M8 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4m0 3a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4 8a4 4 0 1 0 8 0 4 4 0 0 0-8 0"/>
-        </svg>
-            Vinyls
-        </button>
+        
+        <Link to="/dashboard/artist" className="sdvButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill icon" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+            </svg>
+                Artists
+        </Link>
+        <Link to="/dashboard/vinyl" className="sdvButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-vinyl-fill icon" viewBox="0 0 16 16">
+                <path d="M8 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4m0 3a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M4 8a4 4 0 1 0 8 0 4 4 0 0 0-8 0"/>
+            </svg>
+                Vinyls
+        </Link>
         <hr className="divider"></hr>
         <button className="sdvButton" onClick={handleLogOut}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-door-open-fill icon" viewBox="0 0 16 16">
