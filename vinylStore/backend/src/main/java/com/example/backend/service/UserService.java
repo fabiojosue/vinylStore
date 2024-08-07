@@ -1,6 +1,7 @@
 package com.example.backend.service;
 
 import com.example.backend.entity.User;
+import com.example.backend.entity.dto.UserInput;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,8 +18,9 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User register(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public User register(UserInput userInput) {
+        User user = new User(userInput.username(), userInput.password());
+        user.setPassword(passwordEncoder.encode(userInput.password()));
         return userRepository.save(user);
     }
 

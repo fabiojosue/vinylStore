@@ -1,19 +1,24 @@
 package com.example.backend.controller;
 
 import com.example.backend.entity.User;
+import com.example.backend.entity.dto.UserInput;
 import com.example.backend.service.UserService;
 import com.example.backend.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/users")
+@Controller
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -21,19 +26,17 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User registeredUser = userService.register(user);
-        return ResponseEntity.ok(registeredUser);
+    @MutationMapping
+    public User registerUser(@Argument UserInput userInput) {
+        return userService.register(userInput);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody User user) {
-        User foundUser = userService.findByUsername(user.getUsername());
-        if (foundUser != null && passwordEncoder.matches(user.getPassword(), foundUser.getPassword())) {
-            String token = jwtUtil.generateToken(foundUser.getUsername());
-            return ResponseEntity.ok(token);
+    @MutationMapping
+    public String loginUser(@Argument UserInput userInput) {
+        User foundUser = userService.findByUsername(userInput.username());
+        if (foundUser != null && passwordEncoder.matches(userInput.password(), foundUser.getPassword())) {
+            return jwtUtil.generateToken(foundUser.getUsername());
         }
-        return ResponseEntity.status(401).body("Invalid username or password");
+        return "Invalid username or password";
     }
 }
