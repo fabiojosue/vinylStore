@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import '../Styles/dashboard.css';
-import AddArtistModal from '../components/Modals/AddArtistModal';
-import { deleteArtist, getArtists } from '../Service/ArtistService';
-import { Artist } from '../Interfaces/Interfaces';
+import AddVinylModal from '../components/Modals/AddVinylModal';
+import { deleteVinyl, getVinyls } from '../Service/VinylService';
+import { Artist, Vinyl } from '../Interfaces/Interfaces';
 
-const DashboardArtist: React.FC = () => {
-    const [sortConfig, setSortConfig] = useState<{ _id: keyof Artist; direction: string } | null>(null);
-    const [isAddArtistModalOpen, setIsAddArtistModalOpen] = useState(false);
-    const [artists, setArtists] = useState<Artist[]>([]);
-    const [currentArtistId, setCurrentArtistId] = useState<string>('');
+const DashboardVinyl: React.FC = () => {
+    const [sortConfig, setSortConfig] = useState<{ _id: keyof Vinyl; direction: string } | null>(null);
+    const [isAddVinylModalOpen, setIsAddVinylModalOpen] = useState(false);
+    const [vinyls, setVinyls] = useState<Vinyl[]>([]);
+    const [currentVinylId, setCurrentVinylId] = useState<string>('');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
-    const sortData = (_id: keyof Artist) => {
+    const sortData = (_id: keyof Vinyl) => {
         let direction = 'asc';
         if (sortConfig && sortConfig._id === _id && sortConfig.direction === 'asc') {
             direction = 'desc';
         }
 
-        const sortedData = [...artists].sort((a, b) => {
+        const sortedData = [...vinyls].sort((a, b) => {
             if (a[_id]! < b[_id]!) {
                 return direction === 'asc' ? -1 : 1;
             }
@@ -29,48 +29,37 @@ const DashboardArtist: React.FC = () => {
         });
 
         setSortConfig({ _id, direction });
-        setArtists(sortedData);
+        setVinyls(sortedData);
     };
 
-    const getClassNamesFor = (_id: keyof Artist) => {
+    const getClassNamesFor = (_id: keyof Vinyl) => {
         if (!sortConfig) {
             return;
         }
         return sortConfig._id === _id ? sortConfig.direction : undefined;
     };
 
-    const handleAddArtistClick = () => {
-        setCurrentArtistId(''); // Clear the current artist ID
-        setIsAddArtistModalOpen(true);
+    const handleAddVinylClick = () => {
+        setCurrentVinylId(''); // Clear the current vinyl ID
+        setIsAddVinylModalOpen(true);
     };
 
-    const handleEditArtistClick = (id: string) => {
-        setCurrentArtistId(id); // Set the current artist ID
-        setIsAddArtistModalOpen(true);
+    const handleEditVinylClick = (id: string) => {
+        setCurrentVinylId(id); // Set the current vinyl ID
+        setIsAddVinylModalOpen(true);
     };
 
-    const handleCloseArtistModal = () => {
-        setIsAddArtistModalOpen(false);
+    const handleCloseVinylModal = () => {
+        setIsAddVinylModalOpen(false);
     };
 
-    const handleDelete = async (id: string) => {
-        try {
-            console.log('Deleting artist:', id);
-            await deleteArtist(id);
-            setArtists(prevArtists => prevArtists.filter(artist => artist._id !== id));
-            console.log('Artist deleted successfully:', id);
-        } catch (error) {
-            console.error('Error deleting artist:', error);
-        }
-    };
-
-    const handleUpdateArtists = async (value: Artist, type: string) => {
+    const handleUpdateArtists = async (value: Vinyl, type: string) => {
         try {
           if (type === 'add') {
-            setArtists((prevData)=>[...prevData, value]);
+            setVinyls((prevData)=>[...prevData, value]);
           }
           else{
-            setArtists((prevData)=>prevData.map((artist)=>artist._id === value._id ? value : artist));
+            setVinyls((prevData)=>prevData.map((vinyl)=>vinyl._id === value._id ? value : vinyl));
           }
 
             
@@ -79,23 +68,32 @@ const DashboardArtist: React.FC = () => {
         }
     }
 
+    const handleDelete = async (id: string) => {
+        try {
+            console.log('Deleting vinyl:', id);
+            await deleteVinyl(id);
+            setVinyls(prevVinyls => prevVinyls.filter(vinyl => vinyl._id !== id));
+        } catch (error) {
+            console.error('Error deleting vinyl:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchArtists = async () => {
+        const fetchVinyls = async () => {
             try {
-                const data = await getArtists();
-                setArtists(data);
+                const vinyls = await getVinyls();
+                setVinyls(vinyls);
             } catch (error) {
-                console.error('Failed to fetch artists', error);
+                console.error('Failed to fetch vinyls', error);
             }
         };
-
-        fetchArtists();
+        fetchVinyls();
     }, []);
 
     // Pagination logic
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const selectedArtists = artists.slice(startIndex, startIndex + itemsPerPage);
-    const totalPages = Math.ceil(artists.length / itemsPerPage);
+    const selectedVinyls = vinyls.slice(startIndex, startIndex + itemsPerPage);
+    const totalPages = Math.ceil(vinyls.length / itemsPerPage);
 
     const handlePreviousPage = () => {
         setCurrentPage(prev => Math.max(prev - 1, 1));
@@ -105,16 +103,16 @@ const DashboardArtist: React.FC = () => {
         setCurrentPage(prev => Math.min(prev + 1, totalPages));
     };
 
-    return (
+    return(
         <div className="content">
-            <h1>Artists Control</h1>
+                        <h1>Vinyls Control</h1>
             <div className="table">
                 <div className="table-header">
                     <div className="header__item">
                         <a id="photo" className={`filter__link`}>Photo</a>
                     </div>
-                    <div className="header__item" onClick={() => sortData('name')}>
-                        <a id="name" className={`filter__link ${getClassNamesFor('name')}`} href="#">Name</a>
+                    <div className="header__item" onClick={() => sortData('title')}>
+                        <a id="name" className={`filter__link ${getClassNamesFor('title')}`} href="#">Name</a>
                     </div>
                     <div className="header__item">
                         <a id="update" className={`filter__link`}>Update</a>
@@ -125,14 +123,14 @@ const DashboardArtist: React.FC = () => {
                 </div>
 
                 <div className="table-content">
-                    {selectedArtists.map((row, index) => (
+                    {selectedVinyls.map((row, index) => (
                         <div className="table-row" key={index}>
                             <div className="table-data">
-                                <img src={row.imageURL} className='' alt="artist image" />
+                                <img src={row.coverImage} className='' alt="artist image" />
                             </div>
-                            <div className="table-data">{row.name}</div>
+                            <div className="table-data">{row.title}</div>
                             <div className="table-data">
-                                <button className='updateBtn' onClick={() => handleEditArtistClick(row._id!)}>
+                                <button className='updateBtn' onClick={() => handleEditVinylClick(row._id!)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil" viewBox="0 0 16 16">
                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
                                     </svg>
@@ -164,10 +162,10 @@ const DashboardArtist: React.FC = () => {
                 </button>
             </div>
 
-            <button className="addBtn" onClick={handleAddArtistClick}>Add Artist</button>
-            {isAddArtistModalOpen && <AddArtistModal onSubmit={handleUpdateArtists} _id={currentArtistId!} onClose={handleCloseArtistModal} />}
+            <button className="addBtn" onClick={handleAddVinylClick}>Add Vinyl</button>
+            {isAddVinylModalOpen && <AddVinylModal onSubmit={handleUpdateArtists} _id={currentVinylId!} onClose={handleCloseVinylModal} />}
+
         </div>
     );
 };
-
-export default DashboardArtist;
+export default DashboardVinyl;

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { createArtist, updateArtist, getArtistById } from '../../Service/ArtistService';
 import './Modals.css';
+import { Artist } from '../../Interfaces/Interfaces';
 
 interface AddArtistModalProps {
     onClose: () => void;
     _id: string;
+    onSubmit:(artist: Artist, type: string) => void;
 }
 
-const AddArtistModal: React.FC<AddArtistModalProps> = ({ _id, onClose }) => {
+const AddArtistModal: React.FC<AddArtistModalProps> = ({ _id, onClose, onSubmit }) => {
     const [name, setName] = useState('');
     const [biography, setBiography] = useState('');
     const [imageURL, setImageURL] = useState('');
@@ -36,10 +38,12 @@ const AddArtistModal: React.FC<AddArtistModalProps> = ({ _id, onClose }) => {
 
             if (_id) {
               console.log('Updating artist:', artist);
-                await updateArtist(_id, artist);
+                const updatedArtist = await updateArtist(_id, artist);
+                onSubmit(updatedArtist, 'update');
                 console.log('Artist updated successfully:', _id);
             } else {
-                await createArtist(artist);
+                const newArtist = await createArtist(artist);
+                onSubmit(newArtist, 'add');
                 console.log('Artist created successfully');
             }
 

@@ -9,7 +9,7 @@ export interface Artist {
     _id?: string;
     title: string;
     artist: string;
-    artistFetched : Artist;
+    artistFetched? : Artist;
     coverImage: string;
     price: number;
   }

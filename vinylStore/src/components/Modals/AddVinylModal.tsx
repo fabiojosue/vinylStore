@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { getArtists } from '../../Service/ArtistService';
-import { createVinyl } from '../../Service/VinylService';
+import { createVinyl, updateVinyl, getVinylById } from '../../Service/VinylService';
 import './Modals.css';
-import { Vinyl } from '../../Interfaces/Interfaces';
+import { Vinyl, Artist } from '../../Interfaces/Interfaces';
 
 interface AddVinylModalProps {
   onClose: () => void;
-  onAddVinyl: (vinyl: Vinyl) => void;
-}
-
-interface Artist {
+  onSubmit: (vinyl: Vinyl, type: string) => void;
   _id: string;
-  name: string;
 }
 
-const AddVinylModal: React.FC<AddVinylModalProps> = ({ onClose, onAddVinyl }) => {
+
+const AddVinylModal: React.FC<AddVinylModalProps> = ({ _id, onClose, onSubmit }) => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
   const [price, setPrice] = useState('');
@@ -31,10 +28,25 @@ const AddVinylModal: React.FC<AddVinylModalProps> = ({ onClose, onAddVinyl }) =>
       } catch (error) {
         console.error('Failed to fetch artists', error);
       }
+      if (_id){
+        const fetchVinyls = async () => {
+          try{
+            const vinyl = await getVinylById(_id);
+          setTitle(vinyl.title);
+          setArtist(vinyl.artist);
+          setPrice(vinyl.price.toString());
+          setCoverImage(vinyl.coverImage);
+          } catch (error) {
+            console.error('Failed to fetch vinyl', error);
+          }
+        };
+        fetchVinyls();
+      }
+
     };
 
     fetchArtists();
-  }, []);
+  }, [_id]);
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -53,8 +65,17 @@ const AddVinylModal: React.FC<AddVinylModalProps> = ({ onClose, onAddVinyl }) =>
     e.preventDefault();
     const vinyl = { title, artist, price: Number(price), coverImage };
     try {
-      const createdVinyl = await createVinyl(vinyl);
-      console.log('Vinyl created successfully:', createdVinyl);
+      if (_id) {
+        console.log('Updating vinyl:', vinyl);
+        const updatedVinyl = await updateVinyl(_id, vinyl);
+        onSubmit(updatedVinyl, 'update');
+        console.log('Vinyl updated successfully:', _id);
+      } else {
+        console.log('Creating vinyl:', vinyl);
+        const createdVinyl = await createVinyl(vinyl);
+        onSubmit(createdVinyl, 'add');
+        console.log('Vinyl created successfully:', createdVinyl);
+      }
       onClose();
     } catch (error) {
       console.error('Error creating vinyl:', error);
@@ -65,7 +86,7 @@ const AddVinylModal: React.FC<AddVinylModalProps> = ({ onClose, onAddVinyl }) =>
     <div className="modal-overlay">
       <div className="modal-content">
         <button className="close-button" onClick={onClose}>X</button>
-        <h2>Add Vinyl</h2>
+        <h2>{_id ? 'Edit Vinyl' : 'Add Vinyl'}</h2>
         <form onSubmit={handleSubmit}>
           <div className="input-container">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
@@ -106,7 +127,7 @@ const AddVinylModal: React.FC<AddVinylModalProps> = ({ onClose, onAddVinyl }) =>
             </svg>
             <input type="text" value={coverImage} onChange={(e) => setCoverImage(e.target.value)} required placeholder='Image URL'/>
           </div>
-          <button type="submit">Add Vinyl</button>
+          <button type="submit">{_id ? 'Update Vinyl' : 'Add Vinyl'}</button>
         </form>
       </div>
     </div>

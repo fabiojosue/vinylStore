@@ -3,6 +3,7 @@ import DashboardSideNav from '../components/DashboardSideNav/DashboardSideNav';
 import '../Styles/dashboard.css';
 import { Route, Routes } from 'react-router-dom';
 import DashboardArtist from './dashboardArtist';
+import DashboardVinyl from './dashboardVinyl';
 
 const Dashboard: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const Dashboard: React.FC = () => {
       <div className="backContainer">
       <Routes>
         <Route path="artist" element={<DashboardArtist />} />
+        <Route path="vinyl" element={<DashboardVinyl />} />
       </Routes>
       </div>
       
