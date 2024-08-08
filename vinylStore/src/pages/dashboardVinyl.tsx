@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../Styles/dashboard.css';
 import AddVinylModal from '../components/Modals/AddVinylModal';
-import { deleteVinyl, getVinyls } from '../Service/VinylService';
+import { deleteVinyl, getVinyls } from '../Service/VinylServiceGraphql';
 import { Artist, Vinyl } from '../Interfaces/Interfaces';
 
 const DashboardVinyl: React.FC = () => {
@@ -10,6 +10,7 @@ const DashboardVinyl: React.FC = () => {
     const [vinyls, setVinyls] = useState<Vinyl[]>([]);
     const [currentVinylId, setCurrentVinylId] = useState<string>('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(true);
     const itemsPerPage = 5;
 
     const sortData = (_id: keyof Vinyl) => {
@@ -85,6 +86,8 @@ const DashboardVinyl: React.FC = () => {
                 setVinyls(vinyls);
             } catch (error) {
                 console.error('Failed to fetch vinyls', error);
+            } finally{
+                setLoading(false);
             }
         };
         fetchVinyls();
@@ -106,6 +109,8 @@ const DashboardVinyl: React.FC = () => {
     return(
         <div className="content">
                         <h1>Vinyls Control</h1>
+            {loading && <div className="loading-circle"></div>}
+            {!loading &&
             <div className="table">
                 <div className="table-header">
                     <div className="header__item">
@@ -146,8 +151,8 @@ const DashboardVinyl: React.FC = () => {
                         </div>
                     ))}
                 </div>
-            </div>
-
+            </div>}
+            {!loading &&
             <div className="pagination">
                 <button onClick={handlePreviousPage} disabled={currentPage === 1}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
@@ -161,9 +166,13 @@ const DashboardVinyl: React.FC = () => {
                 </svg>
                 </button>
             </div>
+            }
 
+            {!loading &&
             <button className="addBtn" onClick={handleAddVinylClick}>Add Vinyl</button>
+        }
             {isAddVinylModalOpen && <AddVinylModal onSubmit={handleUpdateArtists} _id={currentVinylId!} onClose={handleCloseVinylModal} />}
+            
 
         </div>
     );

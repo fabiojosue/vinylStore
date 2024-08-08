@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../Styles/login.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginUser } from '../Service/UserService';
+import { loginUser } from '../Service/UserServiceGraphql';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');

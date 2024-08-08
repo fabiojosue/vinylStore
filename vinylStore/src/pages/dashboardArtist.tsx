@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../Styles/dashboard.css';
 import AddArtistModal from '../components/Modals/AddArtistModal';
-import { deleteArtist, getArtists } from '../Service/ArtistService';
+import { deleteArtist, getArtists } from '../Service/ArtistServiceGraphql';
 import { Artist } from '../Interfaces/Interfaces';
 
 const DashboardArtist: React.FC = () => {
@@ -10,6 +10,7 @@ const DashboardArtist: React.FC = () => {
     const [artists, setArtists] = useState<Artist[]>([]);
     const [currentArtistId, setCurrentArtistId] = useState<string>('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(true);
     const itemsPerPage = 5;
 
     const sortData = (_id: keyof Artist) => {
@@ -66,26 +67,28 @@ const DashboardArtist: React.FC = () => {
 
     const handleUpdateArtists = async (value: Artist, type: string) => {
         try {
-          if (type === 'add') {
-            setArtists((prevData)=>[...prevData, value]);
-          }
-          else{
-            setArtists((prevData)=>prevData.map((artist)=>artist._id === value._id ? value : artist));
-          }
-
-            
+            if (type === 'add') {
+                setArtists((prevData) => [...prevData, value]);
+            } else {
+                setArtists((prevData) =>
+                    prevData.map((artist) => (artist._id === value._id ? value : artist))
+                );
+            }
         } catch (error) {
-            console.error('Failed to fetch artists', error);
+            console.error('Failed to update artists', error);
         }
-    }
+    };
 
     useEffect(() => {
         const fetchArtists = async () => {
             try {
                 const data = await getArtists();
                 setArtists(data);
+                console.log('Artists fetched successfully', data);
             } catch (error) {
                 console.error('Failed to fetch artists', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -108,6 +111,8 @@ const DashboardArtist: React.FC = () => {
     return (
         <div className="content">
             <h1>Artists Control</h1>
+            {loading && <div className="loading-circle"></div>}
+            {!loading &&
             <div className="table">
                 <div className="table-header">
                     <div className="header__item">
@@ -149,22 +154,26 @@ const DashboardArtist: React.FC = () => {
                     ))}
                 </div>
             </div>
-
+            }
+            {!loading &&
             <div className="pagination">
                 <button onClick={handlePreviousPage} disabled={currentPage === 1}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-                </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
+                    </svg>
                 </button>
                 <span>Page {currentPage} of {totalPages}</span>
                 <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-                </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+                    </svg>
                 </button>
             </div>
+            }
 
+            {!loading &&
             <button className="addBtn" onClick={handleAddArtistClick}>Add Artist</button>
+            }
             {isAddArtistModalOpen && <AddArtistModal onSubmit={handleUpdateArtists} _id={currentArtistId!} onClose={handleCloseArtistModal} />}
         </div>
     );

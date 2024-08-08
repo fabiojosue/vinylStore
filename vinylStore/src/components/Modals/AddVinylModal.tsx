@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getArtists } from '../../Service/ArtistService';
-import { createVinyl, updateVinyl, getVinylById } from '../../Service/VinylService';
+import { getArtists } from '../../Service/ArtistServiceGraphql';
+import { createVinyl, updateVinyl, getVinylById } from '../../Service/VinylServiceGraphql';
 import './Modals.css';
 import { Vinyl, Artist } from '../../Interfaces/Interfaces';
 

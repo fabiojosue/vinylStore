@@ -7,7 +7,7 @@ import image2 from '../assets/Carousel/image2.webp';
 import image3 from '../assets/Carousel/image3.webp';
 import image4 from '../assets/Carousel/image4.webp';
 
-import { getVinyls } from '../Service/VinylService';
+import { getVinyls } from '../Service/VinylServiceGraphql';
 import { Vinyl } from '../Interfaces/Interfaces';
 
 const Home: React.FC = () => {
