@@ -1,0 +1,99 @@
+.artist-details-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    padding: 20px;
+    height: auto;
+}
+
+.artist-details-page > div {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.artist-details-page img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.artist-details-page .divider {
+    width: 2px;
+    background-color: #ccc;
+    height: auto;
+    align-self: stretch;
+    margin: 0 20px;
+    padding: 0;
+    flex: 0 0 auto;
+    min-width: 0;
+}
+
+.artist-details-page > div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tracks-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    /* gap: 10px; */
+    /* margin-left: 10px; */
+    padding-left: 10%;
+    width: 100%;
+}
+
+.track {
+    margin-right: 0;
+    width: 300px;
+    flex: 1 1 calc(20% - 10px);
+    height: 80px;
+    margin: 10px 0;
+}
+
+.goBackBtn{
+    margin: 20px 0;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.goBackBtn:hover{
+    background-color: #333;
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .artist-details-page {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .artist-details-page .divider {
+        display: none;
+    }
+
+    .tracks-container {
+        flex-direction: column;
+    }
+
+    .track {
+        flex: 1 1 100%;
+    }
+}
+
