@@ -1,12 +1,20 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
+/**
+ * Service for interacting with the Spotify API.
+ * Handles authentication and various Spotify endpoints.
+ */
 class SpotifyService {
   private clientId: string = '691d103193dd49c5a81de3fd5bb7bc21';
   private clientSecret: string = '0f020fd39f9d44b4bf4ea4f28265c836';
   private tokenUrl: string = 'https://accounts.spotify.com/api/token';
-  private idAndSecret: string = btoa(this.clientId + ':' + this.clientSecret);
+  private idAndSecret: string = btoa(this.clientId + ':' + this.clientSecret); // Base64 encoded client ID and secret
   private token: string = '';
 
+  /**
+   * Fetches an access token from Spotify.
+   * @returns {Promise<string>} The access token as a string.
+   */
   private async getAccessToken(): Promise<string> {
     const body = 'grant_type=client_credentials';
     const options: AxiosRequestConfig = {
@@ -26,6 +34,10 @@ class SpotifyService {
     }
   }
 
+  /**
+   * Retrieves new releases from Spotify.
+   * @returns {Promise<any>} The new releases data or null if an error occurs.
+   */
   async getNewReleases(): Promise<any> {
     const releasesUrl = 'https://api.spotify.com/v1/browse/new-releases';
 
@@ -45,6 +57,11 @@ class SpotifyService {
     }
   }
 
+  /**
+   * Retrieves the top tracks for a given artist from Spotify.
+   * @param {string} artistId The ID of the artist.
+   * @returns {Promise<any>} The top tracks data or null if an error occurs.
+   */
   async getTopTracks(artistId: string): Promise<any> {
     const topTracksUrl = `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=CR`;
 
@@ -64,6 +81,11 @@ class SpotifyService {
     }
   }
 
+  /**
+   * Retrieves information about a specific artist from Spotify.
+   * @param {string} artistId The ID of the artist.
+   * @returns {Promise<any>} The artist data or null if an error occurs.
+   */
   async getArtist(artistId: string): Promise<any> {
     const artistUrl = `https://api.spotify.com/v1/artists/${artistId}`;
 
@@ -83,6 +105,15 @@ class SpotifyService {
     }
   }
 
+  /**
+   * Retrieves albums based on search criteria from Spotify.
+   * @param {string} type The type of search (e.g., 'album', 'track').
+   * @param {string} query The search query.
+   * @param {string} market The market code (e.g., 'US').
+   * @param {number} limit The number of results to return.
+   * @param {number} offset The offset for pagination.
+   * @returns {Promise<any>} The albums data or null if an error occurs.
+   */
   async getAlbums(
     type: string,
     query: string,
@@ -115,6 +146,11 @@ class SpotifyService {
     }
   }
 
+  /**
+   * Retrieves information about a specific album from Spotify.
+   * @param {string} albumId The ID of the album.
+   * @returns {Promise<any>} The album data or null if an error occurs.
+   */
   async getAlbum(albumId: string): Promise<any> {
     const albumUrl = `https://api.spotify.com/v1/albums/${albumId}`;
 
@@ -134,6 +170,15 @@ class SpotifyService {
     }
   }
 
+  /**
+   * Performs a search query on Spotify.
+   * @param {string} type The type of search (e.g., 'album', 'track').
+   * @param {string} query The search query.
+   * @param {number} limit The number of results to return.
+   * @param {string} [market] Optional market code (e.g., 'US').
+   * @param {number} [offset] Optional offset for pagination.
+   * @returns {Promise<any>} The search results or null if an error occurs.
+   */
   async search(
     type: string,
     query: string,

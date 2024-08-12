@@ -12,8 +12,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       const user = { username, password };
-      const token = await loginUser(user);
-      localStorage.setItem('token', token);
+      await loginUser(user);
       navigate('/dashboard');
     } catch (error) {
       alert('Invalid username or password');

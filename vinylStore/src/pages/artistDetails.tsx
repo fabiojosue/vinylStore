@@ -4,13 +4,15 @@ import type { Artist } from "../Interfaces/Interfaces";
 import "../Styles/artistDetails.css";
 import Navbar from "../components/Navbar/Navbar";
 import SpotifyService from "../Service/SpotifyService";
+import '../Styles/dashboard.css';
 
 const ArtistDetails: React.FC = () => {
   const location = useLocation();
   const { artist } = location.state as { artist: Artist };
-  const [spotifyArtist, setSpotifyArtist] = useState<Artist | null>(null);
+  const [spotifyArtist, setSpotifyArtist] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [artistTracks, setArtistTrack] = useState<any>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const fetchArtist = async () => {
@@ -19,7 +21,7 @@ const ArtistDetails: React.FC = () => {
         const artistSpotifyId = artistId.artists.items[0].id;
         if (artistSpotifyId) {
           setSpotifyArtist(await SpotifyService.getArtist(artistSpotifyId));
-          console.log("artistData",spotifyArtist);
+          
           setArtistTrack(await SpotifyService.getTopTracks(artistSpotifyId));
         } else {
           setError('Failed to fetch artist details.');
@@ -27,19 +29,14 @@ const ArtistDetails: React.FC = () => {
       } catch (err) {
         setError('An error occurred while fetching artist details.');
         console.error(err);
+      } finally {
+        console.log("artistData",spotifyArtist);
+        setIsLoaded(true);
       }
     };
 
     fetchArtist();
   }, []);
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!artist) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div>
@@ -52,8 +49,10 @@ const ArtistDetails: React.FC = () => {
         <div>
           <h1>{artist.name}</h1>
           <p>{artist.biography}</p>
+          {spotifyArtist &&<p>See on <a href={spotifyArtist.external_urls.spotify} target="_blank" rel="noopener noreferrer">Spotify.</a></p>}
           <h2>Top Tracks</h2>
           <div className="tracks-container">
+            {!isLoaded && <div className="loading-circle"></div>}
             {artistTracks && artistTracks.tracks.map((track: any) => (
               <div key={track.id} className="track">
                 <iframe

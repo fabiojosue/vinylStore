@@ -7,30 +7,43 @@ import com.example.backend.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller for handling user-related operations.
+ */
 @Controller
 public class UserController {
 
     private final UserService userService;
-    public UserController(UserService userService) {
+    private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserController(UserService userService, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    /**
+     * Registers a new user with the provided user input.
+     *
+     * @param userInput the input data for the new user
+     * @return the registered User entity
+     */
     @MutationMapping
     public User registerUser(@Argument UserInput userInput) {
         return userService.register(userInput);
     }
 
+    /**
+     * Authenticates a user and generates a JWT token if the credentials are valid.
+     *
+     * @param userInput the input data containing username and password
+     * @return a JWT token if authentication is successful, otherwise an error message
+     */
     @MutationMapping
     public String loginUser(@Argument UserInput userInput) {
         User foundUser = userService.findByUsername(userInput.username());

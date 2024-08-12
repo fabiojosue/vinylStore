@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const DashboardSideNav: React.FC = () => {
     const handleLogOut = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem('jwtToken');
         window.location.href = '/';
     }
 
