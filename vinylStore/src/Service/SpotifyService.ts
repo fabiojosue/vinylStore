@@ -163,6 +163,7 @@ class SpotifyService {
 
     try {
       const response = await axios.get<any>(albumUrl, { headers });
+      console.log("albumDatasasa",response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching album:', error);

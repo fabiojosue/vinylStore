@@ -1,5 +1,7 @@
 import React from 'react';
 import './Vinyl.css';
+import { useNavigate } from 'react-router-dom';
+import type { Vinyl } from "../../Interfaces/Interfaces";
 
 interface Artist {
   _id: string;
@@ -14,16 +16,21 @@ interface VinylProps {
   price: number;
 }
 
-const Vinyl: React.FC<VinylProps> = ({ _id, title, artist, coverImage, price }) => {
-  const artistName = typeof artist === 'string' ? artist : artist.name;
+const Vinyl: React.FC<VinylProps> = (vinyl: VinylProps) => {
+  const artistName = typeof vinyl.artist === 'string' ? vinyl.artist : vinyl.artist.name;
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/vinyl-details', { state: { vinyl } });
+  };
 
   return (
-    <div className="vinyl-card">
-      <img src={coverImage} alt={`${title} cover`} />
+    <div className="vinyl-card" onClick={handleClick}>
+      <img src={vinyl.coverImage} alt={`${vinyl.title} cover`} />
       <div className="vinyl-details">
-        <h3>{title}</h3>
+        <h3>{vinyl.title}</h3>
         <p>{artistName}</p>
-        <p>${price}</p>
+        <p>${vinyl.price}</p>
       </div>
     </div>
   );

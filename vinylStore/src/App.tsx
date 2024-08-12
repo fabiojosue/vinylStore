@@ -5,6 +5,7 @@ import Login from './pages/login';
 import Dashboard from './pages/dashboard';
 import ArtistDetails from './pages/artistDetails';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import VinylDetails from './pages/vinylDetails';
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard/*" element={<ProtectedRoute element={<Dashboard />} />} />
         <Route path="/artist-details" element={<ArtistDetails />} />
+        <Route path="/vinyl-details" element={<VinylDetails />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </Router>
