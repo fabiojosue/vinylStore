@@ -47,7 +47,7 @@ const VinylDetails: React.FC = () => {
           <h1>{vinyl.title}</h1>
           <p>${vinyl.price}</p>
           {vinylTracks &&<p>See on <a href={vinylTracks.external_urls.spotify} target="_blank" rel="noopener noreferrer">Spotify.</a></p>}
-          <h2>Top Tracks</h2>
+          <h2>Album Tracks</h2>
           <div className="tracks-container">
             {!isLoaded && <div className="loading-circle"></div>}
             {vinylTracks && vinylTracks.tracks.items.map((track: any) => (
