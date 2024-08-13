@@ -39,7 +39,7 @@ const VinylDetails: React.FC = () => {
     <div>
       <Navbar />
       <div className="artist-details-page">
-        <div>
+        <div className="img-container">
           <img src={vinyl.coverImage} alt={`${vinyl.title} photo`} />
         </div>
         <div className="divider"></div>
@@ -54,6 +54,7 @@ const VinylDetails: React.FC = () => {
               <div key={track.id} className="track">
                 <iframe
                   src={`https://open.spotify.com/embed/track/${track.id}`}
+                  height={80}
                   frameBorder="0"
                   allow="encrypted-media"
                   title={track.name}
@@ -61,6 +62,7 @@ const VinylDetails: React.FC = () => {
               </div>
             ))}
           </div>
+          <button className="add-to-cart-btn">Add to cart</button>
           <Link to="/" className="goBackBtn">Go back</Link>
         </div>
       </div>

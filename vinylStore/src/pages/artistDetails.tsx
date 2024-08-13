@@ -60,6 +60,7 @@ const ArtistDetails: React.FC = () => {
                   frameBorder="0"
                   allow="encrypted-media"
                   title={track.name}
+                  height={80}
                 ></iframe>
               </div>
             ))}

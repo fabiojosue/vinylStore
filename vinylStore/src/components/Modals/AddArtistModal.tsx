@@ -38,7 +38,6 @@ const AddArtistModal: React.FC<AddArtistModalProps> = ({ _id, onClose, onSubmit 
             if (!name || !biography || !imageURL) {
                 throw new Error('All fields are required');
             }
-    
             const artistData = { name, biography, imageURL };
     
             if (_id) {

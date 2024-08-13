@@ -1,4 +1,4 @@
-.navbar {
+   .navbar {
     background-color: #212121;
     display: flex;
     justify-content: space-between;
@@ -17,15 +17,29 @@
   }
   
   .navbar-buttons button {
-    background-color: #f0f0f0;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 50%;
+    background-color: rgb(255, 204, 0);
+    color: black;
     border: none;
-    padding: 10px 15px;
-    margin-left: 10px;
     cursor: pointer;
-    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
   }
   
   .navbar-buttons button:hover {
-    background-color: #ddd;
+    transform: scale(1.05);
+    color: black;
+  }
+  
+  .navbar-buttons button svg {
+    width: 50%; 
+    height: 50%;
   }
   
