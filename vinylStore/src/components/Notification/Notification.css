@@ -1,0 +1,22 @@
+/* Notification.css */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgb(255, 204, 0);
+    color: black;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    opacity: 0;
+    animation: fadeInOut 3s forwards;
+  }
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-10px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-10px); }
+  }
+  
