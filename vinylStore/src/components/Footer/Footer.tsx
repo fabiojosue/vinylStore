@@ -12,6 +12,13 @@ const Footer: React.FC = () => {
         </svg>
           </a>
         </li> */}
+        <li className='social-icon__item'>
+          <a className='social-icon__link' href='https://konrad.com' target='_blank'>
+          <svg xmlns="http://www.w3.org/2000/svg" className="kg-logo__k" width="16" height="16" viewBox="0 0 183.78667 184.03999">
+            <path className="kg-logo__k__fill" d="M0 0v48.47l67.68 67.77 67.7 67.8h48.4L91.89 92 0 0M0 116.68v67.36h67.36l-33.68-33.68L0 116.68M67.97 0l50.52 50.51L169 0z"></path>
+          </svg>
+          </a>
+        </li>
         <li className="social-icon__item">
           <a className="social-icon__link" href="https://x.com/sowrnl" target='_blank'>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-twitter-x" viewBox="0 0 16 16">
