@@ -97,7 +97,7 @@ export const deleteArtist = async (id: string): Promise<void> => {
 };
 
 // Validate if artist is being used in a record
-export const validateArtist = async (id: string): Promise<boolean> => {
+export const validateArtist = async (id: string): Promise<any> => {
   const IS_ARTIST_USED = gql`
     mutation IsArtistUsed($id: ID!) {
       isArtistUsed(id: $id)

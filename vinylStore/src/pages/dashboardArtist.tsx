@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../Styles/dashboard.css';
 import AddArtistModal from '../components/Modals/AddArtistModal';
-import { deleteArtist, getArtists } from '../Service/ArtistServiceGraphql';
+import { deleteArtist, getArtists, validateArtist } from '../Service/ArtistServiceGraphql';
 import { Artist } from '../Interfaces/Interfaces';
 
 const DashboardArtist: React.FC = () => {
@@ -56,10 +56,16 @@ const DashboardArtist: React.FC = () => {
 
     const handleDelete = async (id: string) => {
         try {
-            console.log('Deleting artist:', id);
-            await deleteArtist(id);
-            setArtists(prevArtists => prevArtists.filter(artist => artist._id !== id));
-            console.log('Artist deleted successfully:', id);
+            if (await validateArtist(id)){
+                alert('This artist is being used in a record, you cannot delete it');
+            } else {
+                console.log('Deleting artist:', id);
+                await deleteArtist(id);
+                setArtists(prevArtists => prevArtists.filter(artist => artist._id !== id));
+                console.log('Artist deleted successfully:', id);
+            }
+
+            
         } catch (error) {
             console.error('Error deleting artist:', error);
         }
